@@ -1,4 +1,4 @@
-﻿using Domain.Model;
+﻿using Domain;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;

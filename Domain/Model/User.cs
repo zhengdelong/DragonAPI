@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Model
+namespace Domain
 {
     /// <summary>
     /// 用户信息
     /// </summary>
-    public class User
+    public class User : AggregateRoot
     {
         /// <summary>
         /// 用户id

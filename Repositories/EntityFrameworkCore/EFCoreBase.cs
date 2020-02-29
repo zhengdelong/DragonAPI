@@ -1,12 +1,15 @@
-﻿using Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Infrastructure;
+using Domain;
 
 namespace Repositories
 {
-    public class EFCoreBase
+    /// <summary>
+    /// ef core 查询
+    /// </summary>
+    public class EFCoreBase<T>: IRepository<T> where T : AggregateRoot
     {
         public DragonDBContext DragonDBContext { get; private set; }
         public EFCoreBase(DragonDBContext dragonDBContext)
@@ -19,7 +22,7 @@ namespace Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T Find<T>(string id) where T : class
+        public T Find(string id)
         {
             return DragonDBContext.Set<T>().Find(id);
         }
@@ -29,7 +32,7 @@ namespace Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="funcWhere"></param>
         /// <returns></returns>
-        public IQueryable<T> Query<T>(Expression<Func<T, bool>> funcWhere) where T : class
+        public IQueryable<T> Query(Expression<Func<T, bool>> funcWhere) 
         {
             if (funcWhere == null)
                 return DragonDBContext.Set<T>();
@@ -47,12 +50,12 @@ namespace Repositories
         /// <param name="funcOrderby"></param>
         /// <param name="isAsc"></param>
         /// <returns></returns>
-        public PageResult<T> QueryPage<T, S>(Expression<Func<T, bool>> funcWhere, int pageSize, int pageIndex, Expression<Func<T, S>> funcOrderby, bool isAsc = true) where T : class
+        public PageResult<T> QueryPage<S>(Expression<Func<T, bool>> funcWhere, int pageSize, int pageIndex, Expression<Func<T, S>> funcOrderby, bool isAsc = true)
         {
-            var list = DragonDBContext.Set<T>().Where(s => true);
+            var list = DragonDBContext.Set<T>().AsQueryable();
             if (funcWhere != null)
             {
-                list = list.Where<T>(funcWhere);
+                list = list.Where(funcWhere);
             }
             if (isAsc)
             {

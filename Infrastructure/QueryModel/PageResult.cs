@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Domain
+namespace Infrastructure
 {
     public class PageResult<T>
     {
