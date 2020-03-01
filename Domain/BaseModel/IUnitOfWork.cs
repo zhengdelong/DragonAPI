@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Infrastructure;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Domain
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork: IBaseRepository
     {
         /// <summary>
         /// 新增单个实体

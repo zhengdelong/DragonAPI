@@ -9,14 +9,14 @@ namespace Repositories
 {
     public class DragonDBContext : DbContext
     {
-        //public DragonDBContext(DbContextOptions<DragonDBContext> options) : base(options)
-        //{
-        //}
-        public DbSet<User> Users { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DragonDBContext(DbContextOptions<DragonDBContext> options) : base(options)
         {
-            optionsBuilder.UseMySql(Appsetting.DragonConnectionString);
         }
+        public DbSet<User> Users { get; set; }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql(Appsetting.DragonConnectionString);
+        //}
 
     }
 }

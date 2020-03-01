@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Domain
 {
-    public interface IRepository<TEntity> where TEntity : AggregateRoot
+    public interface IRepository<TEntity> where TEntity : AggregateRoot, IBaseRepository
     {
         TEntity Find(string id);
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> funcWhere);

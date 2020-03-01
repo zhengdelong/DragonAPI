@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infrastructure;
 
 namespace Domain
 {
-    public interface IAggregateRoot
+    public interface IAggregateRoot: IBaseRepository
     {
     }
 }
