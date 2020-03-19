@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public interface IUnitOfWork: IBaseRepository
+    public interface IUnitOfWork : IBaseRepository
     {
         /// <summary>
         /// 新增单个实体
@@ -32,6 +32,12 @@ namespace Domain
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         void Delete<T>(T entity) where T : class, IAggregateRoot;
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entitys"></param>
+        void BulkInsert<T>(IEnumerable<T> entitys) where T : class, IAggregateRoot;
 
         /// <summary>
         /// 

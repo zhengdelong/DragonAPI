@@ -9,13 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dragon.Services", "Dragon.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{C3E91681-FCE2-452A-9C61-68BC916E206B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "DragonServices\Services.csproj", "{834959EB-E079-4D53-AB22-D5D8B59D6674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "DragonServices\Services.csproj", "{834959EB-E079-4D53-AB22-D5D8B59D6674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{4F0DE7D8-537E-4ABB-A103-953B9BC83085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{4F0DE7D8-537E-4ABB-A103-953B9BC83085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D961A727-4ACE-4DE3-A9F7-99CA86EB803C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D961A727-4ACE-4DE3-A9F7-99CA86EB803C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{ED7E3766-3E86-407E-B83B-0AAB05539FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{ED7E3766-3E86-407E-B83B-0AAB05539FF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dragon.Domain", "Dragon.Domain", "{3FA0C97F-072A-4B23-A11E-CB19066E3593}"
 EndProject

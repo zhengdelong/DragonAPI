@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
+using Infrastructure;
 using System.Reflection;
 using System.Linq;
+using Repositories;
 
-namespace Infrastructure
+namespace DragonAPI
 {
     public static class AotufacRegisterExtension
     {
@@ -29,6 +29,8 @@ namespace Infrastructure
             builder.RegisterAssemblyTypes(servicesType)
                    .Where(t => typeof(IService).GetTypeInfo().IsAssignableFrom(t))
                    .AsImplementedInterfaces();
+
+            builder.RegisterType<DragonDBContext>();
         }
         /// <summary>
         /// 获取程序集

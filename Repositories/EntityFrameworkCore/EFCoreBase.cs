@@ -57,15 +57,9 @@ namespace Repositories
             {
                 list = list.Where(funcWhere);
             }
-            if (isAsc)
-            {
-                list = list.OrderBy(funcOrderby);
-            }
-            else
-            {
-                list = list.OrderByDescending(funcOrderby);
-            }
-            PageResult<T> result = new PageResult<T>()
+
+            list = isAsc ? list.OrderBy(funcOrderby) : list.OrderByDescending(funcOrderby);
+            var result = new PageResult<T>()
             {
                 DataList = list.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList(),
                 PageIndex = pageIndex,

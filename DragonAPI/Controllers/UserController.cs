@@ -14,7 +14,7 @@ namespace DragonAPI.Controllers
     public class UserController : ControllerBase
     {
         public readonly IUserServices _userServices;
-        public UserController(IUserServices userServices) 
+        public UserController(IUserServices userServices)
         {
             _userServices = userServices;
         }
@@ -23,9 +23,9 @@ namespace DragonAPI.Controllers
         /// </summary>
         /// <param name="user"></param>
         [HttpPost("User")]
-        public bool AddUser(User user) 
+        public bool AddUser(User user)
         {
-           return _userServices.AddUser(user);
+            return _userServices.AddUser(user);
         }
     }
 }

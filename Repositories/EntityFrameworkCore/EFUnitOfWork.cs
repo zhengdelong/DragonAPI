@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using MySql.Data.MySqlClient;
+using Repositories.EntityFrameworkCore;
 
 namespace Repositories
 {
@@ -41,6 +48,39 @@ namespace Repositories
                 _dragonDBContext.Entry<T>(t).State = EntityState.Modified;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entitys"></param>
+        public void BulkInsert<T>([NotNull]IEnumerable<T> entitys) where T : class, IAggregateRoot
+        {
+            int insertcount = entitys.Count();
+            int numresult = insertcount / 200;
+            int remainder = insertcount % 200;
+
+            if (numresult <= 0)
+            {
+                var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys);
+                bulkModels.AddLast(bulkModel);
+            }
+            else
+            {
+                for (int i = 1; i <= numresult; i++)
+                {
+                    var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys.Skip((i - 1) * 200).Take(200));
+                    bulkModels.AddLast(bulkModel);
+                }
+                if (remainder > 0)
+                {
+                    var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys.TakeLast(remainder));
+                    bulkModels.AddLast(bulkModel);
+                }
+            }
+
+        }
+
+        private LinkedList<BulkModel> bulkModels = new LinkedList<BulkModel>();
 
         public bool Commit()
         {
@@ -48,7 +88,10 @@ namespace Repositories
             try
             {
                 _dragonDBContext.SaveChanges();
-
+                foreach (var bulk in bulkModels)
+                {
+                    _dragonDBContext.Database.ExecuteSqlRaw(bulk.Sql, bulk.Parameters);
+                }
                 tran.Commit();
                 return true;
             }
@@ -59,6 +102,7 @@ namespace Repositories
             }
             finally
             {
+                bulkModels = null;
                 tran.Dispose();
             }
         }
