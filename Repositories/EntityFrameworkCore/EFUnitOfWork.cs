@@ -56,28 +56,28 @@ namespace Repositories
         public void BulkInsert<T>([NotNull]IEnumerable<T> entitys) where T : class, IAggregateRoot
         {
             int insertcount = entitys.Count();
-            int numresult = insertcount / 200;
-            int remainder = insertcount % 200;
-
+            int numresult = insertcount / 500;
+            int remainder = insertcount % 500;
+            var bulkConfig = _dragonDBContext.BulkConfig<T>();
             if (numresult <= 0)
             {
-                var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys);
+
+                var bulkModel = BulkOpration.GetBulkModels(entitys, bulkConfig);
                 bulkModels.AddLast(bulkModel);
             }
             else
             {
                 for (int i = 1; i <= numresult; i++)
                 {
-                    var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys.Skip((i - 1) * 200).Take(200));
+                    var bulkModel = BulkOpration.GetBulkModels(entitys.Skip((i - 1) * 500).Take(500), bulkConfig);
                     bulkModels.AddLast(bulkModel);
                 }
                 if (remainder > 0)
                 {
-                    var bulkModel = _dragonDBContext.GetBulkModels<T>(entitys.TakeLast(remainder));
+                    var bulkModel = BulkOpration.GetBulkModels(entitys.TakeLast(remainder), bulkConfig);
                     bulkModels.AddLast(bulkModel);
                 }
             }
-
         }
 
         private LinkedList<BulkModel> bulkModels = new LinkedList<BulkModel>();

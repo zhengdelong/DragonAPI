@@ -16,14 +16,15 @@ namespace Repositories
         public DbSet<User> UserList { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //var loggerFactory = new LoggerFactory();
-            //loggerFactory.AddProvider(new EFLoggerProvider());
-            //optionsBuilder.UseLoggerFactory(loggerFactory);
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new EFLoggerProvider());
+            optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.UseMySql(Appsetting.DragonConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<User>().HasKey(s=>s.UserID);
             modelBuilder.Entity<User>().Property("UserID").HasColumnName("ID").HasColumnType("char(36)");
             modelBuilder.Entity<User>().Property("UserName").HasColumnType("varchar(50)");
