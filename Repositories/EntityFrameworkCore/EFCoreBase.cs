@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Infrastructure;
 using Domain;
+using System.Collections.Generic;
 
 namespace Repositories
 {
@@ -22,9 +23,9 @@ namespace Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T Find(string id)
+        public T QueryEntity(Expression<Func<T,bool>> expression)
         {
-            return DragonDBContext.Set<T>().Find(id);
+            return DragonDBContext.Set<T>().Where(expression).FirstOrDefault();
         }
         /// <summary>
         /// 
@@ -32,12 +33,12 @@ namespace Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="funcWhere"></param>
         /// <returns></returns>
-        public IQueryable<T> Query(Expression<Func<T, bool>> funcWhere) 
+        public IEnumerable<T> Query(Expression<Func<T, bool>> funcWhere) 
         {
             if (funcWhere == null)
-                return DragonDBContext.Set<T>();
+                return DragonDBContext.Set<T>().ToList();
             else
-                return DragonDBContext.Set<T>().Where(funcWhere);
+                return DragonDBContext.Set<T>().Where(funcWhere).ToList();
         }
         /// <summary>
         /// 分页查询

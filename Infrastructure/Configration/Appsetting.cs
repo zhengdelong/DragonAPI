@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure
 {
@@ -9,11 +6,26 @@ namespace Infrastructure
     {
         public static IConfiguration Configuration { get; set; }
 
-        public static string DragonConnectionString 
+        public static string DragonConnectionString
         {
-            get {
+            get
+            {
                 return Configuration["DragonDatabase"];
             }
         }
+
+        //public static RabbitmqConifgModel RabbitmqConifgModel
+        //{
+        //    get
+        //    {
+        //        var rabbitmqConifgModel = new RabbitmqConifgModel();
+        //        var section = Configuration.GetSection("RabbitMQConifguration");
+        //        if (section != null)
+        //        {
+        //            rabbitmqConifgModel = section.Get<RabbitmqConifgModel>();
+        //        }
+        //        return rabbitmqConifgModel;
+        //    }
+        //}
     }
 }

@@ -6,6 +6,10 @@ using Domain;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Encrypt;
 using Infrastructure;
+using Kogel.Dapper.Extension;
+using Kogel.Dapper.Extension.Model;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -23,26 +27,46 @@ namespace Services
 
         public User User(string userID)
         {
-            return _userRepositories.Find(userID);
+            return _userRepositories.QueryEntity(s => s.UserID == userID);
         }
-        public bool AddUser(User user)
+        public async Task<int> AddUser(User user)
         {
             _ILogger.LogError("test");
             LinkedList<User> users = new LinkedList<User>();
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 50; i++)
             {
-                User user1 = new User();
-                user1.UserID = SequentialGuidGenerator.Instance.Create().ToString();
-                user1.ClassId = i;
-                user1.CreateTime = DateTime.Now;
-                user1.Money = i;
-                user1.PassWord =MD5Encrypt.MD5Encrypt32(user.UserName+i);
-                user1.Type = 1;
-                user1.UserName = $"test{i}";
+                User user1 = new User
+                {
+                    UserID = SequentialGuidGenerator.Instance.Create().ToString(),
+                    ClassId = 12,
+                    CreateTime = DateTime.Now,
+                    Money = 23.32M,
+                    PassWord = MD5Encrypt.MD5Encrypt32(user.UserName + i),
+                    Type = UserEnum.user,
+                    UserName = $"test{i}",
+                    IsUsed = false
+                };
                 users.AddLast(user1);
             }
+            await _unitOfWork.BulkInsert(users);
+            _unitOfWork.Commit();
+            return 1;
+        }
 
-            _unitOfWork.BulkInsert(users);
+
+        public PageList<User> UserPageList(int pageSize, int pageIndex, string userName)
+        {
+            Expression<Func<User, bool>> expression = s => true;
+            if (!string.IsNullOrEmpty(userName))
+            {
+                expression = expression.And(s => s.UserName == userName);
+            }
+            return _userRepositories.QueryPage(expression, pageSize, pageIndex, s => s.CreateTime);
+        }
+
+        public bool UpdateUser(string userID, string name)
+        {
+            _unitOfWork.Update<User>(s => s.UserID == userID, u => new Domain.User() { UserName = name,CreateTime = DateTime.Now, Type = UserEnum.admin, IsUsed = false });
             return _unitOfWork.Commit();
         }
     }

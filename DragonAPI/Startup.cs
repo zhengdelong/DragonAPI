@@ -1,14 +1,13 @@
 
 using Autofac;
 using Infrastructure;
+using Infrastructure.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Repositories;
 
 namespace DragonAPI
 {
@@ -20,9 +19,11 @@ namespace DragonAPI
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile($"Configs/{env.EnvironmentName}/appsettings.json", optional: true)
+                .AddJsonFile($"Configs/{env.EnvironmentName}/appsettings.RabbitMQ.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
             Appsetting.Configuration = Configuration;
+            RabbitMQSetting.Configuration = Configuration;
         }
 
         public IConfiguration Configuration { get; }

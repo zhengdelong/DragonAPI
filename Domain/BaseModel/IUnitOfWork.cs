@@ -1,5 +1,8 @@
 ﻿using Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Domain
 {
@@ -17,27 +20,27 @@ namespace Domain
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
-        void Update<T>(T entity) where T : class, IAggregateRoot;
+        void Update<T>(Expression<Func<T, bool>> funcWhere, T entity) where T : class, IAggregateRoot;
 
         /// <summary>
         /// 修改所有实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="models"></param>
-        void Update<T>(List<T> models) where T : class, IAggregateRoot;
+        void Update<T>(Expression<Func<T, bool>> expression, Expression<Func<T, T>> updateExpression) where T : class, IAggregateRoot;
 
         /// <summary>
         /// 删除单个实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
-        void Delete<T>(T entity) where T : class, IAggregateRoot;
+        void Delete<T>(Expression<Func<T, bool>> funcWhere) where T : class, IAggregateRoot;
         /// <summary>
         /// 批量插入
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entitys"></param>
-        void BulkInsert<T>(IEnumerable<T> entitys) where T : class, IAggregateRoot;
+        Task BulkInsert<T>(IEnumerable<T> entitys) where T : class, IAggregateRoot;
 
         /// <summary>
         /// 

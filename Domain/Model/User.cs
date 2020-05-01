@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualBasic;
+using Kogel.Dapper.Extension.Attributes;
 
 namespace Domain
 {
@@ -13,6 +11,8 @@ namespace Domain
         /// <summary>
         /// 用户id
         /// </summary>
+        [Identity(IsIncrease = false)]
+        [Display(Rename = "ID")]
         public string UserID { get; set; }
         /// <summary>
         /// 用户姓名
@@ -24,18 +24,19 @@ namespace Domain
         public string PassWord { get; set; }
 
         public DateTime CreateTime { get; set; }
-
-        public ushort Type { get; set; }
+        public UserEnum Type { get; set; }
 
         public int ClassId { get; set; }
         public decimal Money { get; set; }
+        public bool IsUsed { get; set; }
+
     }
 
     public enum UserEnum
     {
-        nomal=0,
-        admin =1,
-        user=2
+        nomal = 0,
+        admin = 1,
+        user = 2
 
     }
 }

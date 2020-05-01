@@ -2,7 +2,8 @@
 using Infrastructure;
 using System.Reflection;
 using System.Linq;
-using Repositories;
+using MySql.Data.MySqlClient;
+using Infrastructure.RabbitMQ;
 
 namespace DragonAPI
 {
@@ -19,7 +20,7 @@ namespace DragonAPI
             //    .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
             //    .PropertiesAutowired();
 
-            var repositoriesType = GetAssemblies("Repositories");
+            var repositoriesType = GetAssemblies("Dapper.Repositories");
 
             builder.RegisterAssemblyTypes(repositoriesType)
                    .Where(t => typeof(IBaseRepository).GetTypeInfo().IsAssignableFrom(t))
@@ -29,8 +30,10 @@ namespace DragonAPI
             builder.RegisterAssemblyTypes(servicesType)
                    .Where(t => typeof(IService).GetTypeInfo().IsAssignableFrom(t))
                    .AsImplementedInterfaces();
-
-            builder.RegisterType<DragonDBContext>();
+            builder.Register(c => new MySqlConnection(Appsetting.DragonConnectionString));
+            builder.RegisterType(typeof(RabbitMQClient)).SingleInstance();
+            builder.RegisterType(typeof(RabbitMQProvidor)).As(typeof(IRabbitMQProvidor)).SingleInstance();
+            //builder.RegisterType<DragonDBContext>();
         }
         /// <summary>
         /// 获取程序集
@@ -43,7 +46,7 @@ namespace DragonAPI
             {
                 return Assembly.Load(virtualPaths);
             }
-            else 
+            else
             {
                 return null;
             }

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <ServerGarbageCollection>true</ServerGarbageCollection>
+	  <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+	  <ThreadPoolMinThreads>500</ThreadPoolMinThreads>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="15.0.4" />
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Kogel.Dapper.Extension" Version="3.1.9.3" />
+    <PackageReference Include="Kogel.Dapper.Extension.MySql" Version="3.1.9.3" />
+    <PackageReference Include="MySqlConnector" Version="0.63.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

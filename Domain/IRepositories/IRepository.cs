@@ -1,4 +1,6 @@
 ﻿using Infrastructure;
+using Kogel.Dapper.Extension.Core.Interfaces;
+using Kogel.Dapper.Extension.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,9 @@ namespace Domain
 {
     public interface IRepository<TEntity> where TEntity : AggregateRoot, IBaseRepository
     {
-        TEntity Find(string id);
-        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> funcWhere);
-        PageResult<TEntity> QueryPage<S>(Expression<Func<TEntity, bool>> funcWhere, int pageSize, int pageIndex, Expression<Func<TEntity, S>> funcOrderby, bool isAsc = true);
+        TEntity QueryEntity(Expression<Func<TEntity, bool>> funcWhere);
+        IEnumerable<TEntity> Query(Expression<Func<TEntity, bool>> funcWhere);
+        PageList<TEntity> QueryPage(Expression<Func<TEntity, bool>> funcWhere, int pageSize, int pageIndex, Expression<Func<TEntity, Object>> funcOrderby, bool isAsc = true);
+        IQuerySet<TEntity> QuerySet();
     }
 }
