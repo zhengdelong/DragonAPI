@@ -137,7 +137,8 @@ namespace Dapper.Repositories
             }
             writer.Flush();
             ms.Position = 0;
-            var mybyte = ms.ToArray();
+            //var mybyte = ms.ToArray();
+            var fieldPairs = entityObject.FieldPairs;
             //File.WriteAllBytes("C:/Users/Public/Desktop/test.csv", mybyte);
             var bulkLoader = new MySqlBulkLoader(_mySqlConnection)
             {
@@ -150,7 +151,30 @@ namespace Dapper.Repositories
                 Local = true,
                 SourceStream = ms
             };
-            bulkLoader.Columns.AddRange(entityObject.FieldPairs.Values);
+            var bitPropertys = entityObject.Properties.Where(s => s.PropertyType == typeof(bool)).ToList();
+            //int i = 1;
+            //foreach (var item in bitPropertys)
+            //{
+            //    fieldPairs[item.Name] = $"@var{i}";
+            //    bulkLoader.Expressions.Add($"{item.Name} = CAST(CONV(@var{i}, 2, 10) AS UNSIGNED)");
+            //    i++;
+            //}
+
+            int i = 1;
+            foreach (var item in bitPropertys)
+            {
+                fieldPairs[item.Name] = $"@var{i}";
+                bulkLoader.Expressions.Add($"{item.Name} = CAST(CONV(@var{i}, 2, 10) AS UNSIGNED)");
+                i++;
+            }
+            var datetimePropertyType = entityObject.Properties.Where(s => s.PropertyType == typeof(DateTime?)).ToList();
+            foreach (var item in datetimePropertyType)
+            {
+                fieldPairs[item.Name] = $"@pa{i}";
+                bulkLoader.Expressions.Add($"{item.Name} = if(LENGTH(@pa{i})=0,null,@pa{i})");
+                i++;
+            }
+            bulkLoader.Columns.AddRange(fieldPairs.Values);
             //bulkLoader.Expressions.Add("IsUsed = 0");
             //bulkLoader.Expressions.Add("Type = 2");
             await bulkLoader.LoadAsync();

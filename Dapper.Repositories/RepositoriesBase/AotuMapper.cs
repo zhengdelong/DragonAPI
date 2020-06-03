@@ -32,7 +32,7 @@ namespace Dapper.Repositories
                     map.TypeConverter<EnumToShortConverter>();
                     tcOption.Format();
                 }
-                if (item.PropertyType == typeof(DateTime))
+                if (item.PropertyType == typeof(DateTime)|| item.PropertyType == typeof(DateTime?))
                 {
                     //  map.TypeConverter<DateTimeConverter>();
                     tcOption.Format("yyyy-MM-dd HH:mm:ss");
@@ -95,13 +95,13 @@ namespace Dapper.Repositories
             {
                 if (!b)
                 {
-                    return 0.ToString();
+                    return "0";
                 }
-                else { return 1.ToString(); }
+                else { return "1"; }
             }
             else
             {
-                return 0.ToString();
+                return "1";
             }
         }
         ///// <summary>

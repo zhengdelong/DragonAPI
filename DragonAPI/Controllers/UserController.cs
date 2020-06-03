@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Domain;
 using Kogel.Dapper.Extension.Model;
@@ -43,7 +46,7 @@ namespace DragonAPI.Controllers
         /// <param name="userid"></param>
         /// <returns></returns>
         [HttpGet("User")]
-        public User User(string userid)
+        public  User User(string userid)
         {
             return _userServices.User(userid);
         }

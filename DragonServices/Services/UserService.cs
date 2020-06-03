@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using Domain;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Encrypt;
 using Infrastructure;
-using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Model;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -35,6 +32,11 @@ namespace Services
             LinkedList<User> users = new LinkedList<User>();
             for (int i = 0; i < 50; i++)
             {
+                var flag = false;
+                if (i > 20)
+                {
+                    flag = true;
+                }
                 User user1 = new User
                 {
                     UserID = SequentialGuidGenerator.Instance.Create().ToString(),
@@ -44,7 +46,7 @@ namespace Services
                     PassWord = MD5Encrypt.MD5Encrypt32(user.UserName + i),
                     Type = UserEnum.user,
                     UserName = $"test{i}",
-                    IsUsed = false
+                    IsUsed = flag
                 };
                 users.AddLast(user1);
             }
@@ -56,17 +58,23 @@ namespace Services
 
         public PageList<User> UserPageList(int pageSize, int pageIndex, string userName)
         {
-            Expression<Func<User, bool>> expression = s => true;
+            //Expression<Func<User, bool>> expression = s => true;
+            //if (!string.IsNullOrEmpty(userName))
+            //{
+            //    expression = expression.And(s => s.UserName == userName);
+            //}
+            var res = _userRepositories.QuerySet().Where(s => true);
             if (!string.IsNullOrEmpty(userName))
             {
-                expression = expression.And(s => s.UserName == userName);
+                res = res.Where(s => s.UserName == userName);
             }
-            return _userRepositories.QueryPage(expression, pageSize, pageIndex, s => s.CreateTime);
+
+            return res.OrderBy(s => s.UserName).PageList(pageIndex, pageSize);
         }
 
         public bool UpdateUser(string userID, string name)
         {
-            _unitOfWork.Update<User>(s => s.UserID == userID, u => new Domain.User() { UserName = name,CreateTime = DateTime.Now, Type = UserEnum.admin, IsUsed = false });
+            _unitOfWork.Update<User>(s => s.UserID == userID, u => new Domain.User() { UserName = name, CreateTime = DateTime.Now, Type = UserEnum.admin, IsUsed = false });
             return _unitOfWork.Commit();
         }
     }
