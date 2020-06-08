@@ -170,8 +170,8 @@ namespace Dapper.Repositories
             var datetimePropertyType = entityObject.Properties.Where(s => s.PropertyType == typeof(DateTime?)).ToList();
             foreach (var item in datetimePropertyType)
             {
-                fieldPairs[item.Name] = $"@pa{i}";
-                bulkLoader.Expressions.Add($"{item.Name} = if(LENGTH(@pa{i})=0,null,@pa{i})");
+                fieldPairs[item.Name] = $"@var{i}";
+                bulkLoader.Expressions.Add($"{item.Name} = if(LENGTH(@var{i})=0,null,@var{i})");
                 i++;
             }
             bulkLoader.Columns.AddRange(fieldPairs.Values);
