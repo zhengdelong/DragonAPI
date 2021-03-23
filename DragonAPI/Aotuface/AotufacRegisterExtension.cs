@@ -2,8 +2,8 @@
 using Infrastructure;
 using System.Reflection;
 using System.Linq;
-using MySql.Data.MySqlClient;
 using Infrastructure.RabbitMQ;
+using MySqlConnector;
 
 namespace DragonAPI
 {

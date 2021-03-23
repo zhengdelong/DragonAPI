@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<ServerGarbageCollection>true</ServerGarbageCollection>
 		<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
 		<ThreadPoolMinThreads>500</ThreadPoolMinThreads>
@@ -12,12 +12,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Kogel.Dapper.Extension.MySql" Version="3.1.9.3" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
-		<PackageReference Include="MySqlConnector" Version="0.63.2" />
-		<PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+		<PackageReference Include="MySqlConnector" Version="1.1.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
 	</ItemGroup>
 
 	<ItemGroup>

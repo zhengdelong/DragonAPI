@@ -1,11 +1,11 @@
 ﻿using Domain;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Kogel.Dapper.Extension.Model;
 using Kogel.Dapper.Extension.MySql;
 using Kogel.Dapper.Extension.Core.Interfaces;
+using MySqlConnector;
 
 namespace Dapper.Repositories
 {
@@ -47,7 +47,8 @@ namespace Dapper.Repositories
         /// <returns></returns>
         public PageList<T> QueryPage(Expression<Func<T, bool>> funcWhere, int pageSize, int pageIndex, Expression<Func<T, object>> funcOrderby, bool isAsc = true)
         {
-            return _mySqlConnection.QuerySet<T>().Where(funcWhere).OrderBy(funcOrderby).PageList(pageIndex, pageSize);
+            var res = _mySqlConnection.QuerySet<T>().Where(funcWhere).OrderBy(funcOrderby).PageList(pageIndex, pageSize);
+            return res;
         }
         /// <summary>
         /// 

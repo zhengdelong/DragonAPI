@@ -27,10 +27,7 @@ namespace DragonAPI.Controllers
         /// </summary>
         /// <param name="user"></param>
         [HttpPost("User")]
-        public async Task<int> AddUser(User user)
-        {
-            return await _userServices.AddUser(user);
-        }
+        public async Task<int> AddUser(User user) => await _userServices.AddUser(user);
         /// <summary>
         /// 
         /// </summary>
@@ -50,10 +47,22 @@ namespace DragonAPI.Controllers
         {
             return _userServices.User(userid);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpPut("UpdateUser")]
         public bool UpdateUser(string userID, string name)
         {
             return _userServices.UpdateUser(userID, name);
+        }
+
+        [HttpPut("getstring")]
+        public string GetString() 
+        {
+            return "";
         }
     }
 }

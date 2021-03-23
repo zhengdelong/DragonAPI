@@ -7,6 +7,7 @@ using Infrastructure;
 using Kogel.Dapper.Extension.Model;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace Services
 {
@@ -29,8 +30,8 @@ namespace Services
         public async Task<int> AddUser(User user)
         {
             _ILogger.LogError("test");
-            LinkedList<User> users = new LinkedList<User>();
-            for (int i = 0; i < 50; i++)
+            List<User> users = new List<User>(100000);
+            for (int i = 0; i < 100000; i++)
             {
                 var flag = false;
                 if (i > 20)
@@ -48,7 +49,7 @@ namespace Services
                     UserName = $"test{i}",
                     IsUsed = flag
                 };
-                users.AddLast(user1);
+                users.Add(user1);
             }
             await _unitOfWork.BulkInsert(users);
             _unitOfWork.Commit();
@@ -71,6 +72,8 @@ namespace Services
 
             return res.OrderBy(s => s.UserName).PageList(pageIndex, pageSize);
         }
+
+
 
         public bool UpdateUser(string userID, string name)
         {

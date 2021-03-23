@@ -40,7 +40,7 @@ namespace Domain
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entitys"></param>
-        Task BulkInsert<T>(IEnumerable<T> entitys) where T : class, IAggregateRoot;
+        Task BulkInsert<T>(ICollection<T> entitys) where T : class, IAggregateRoot;
 
         /// <summary>
         /// 

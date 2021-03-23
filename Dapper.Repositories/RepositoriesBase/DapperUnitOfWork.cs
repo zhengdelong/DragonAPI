@@ -13,7 +13,7 @@ using Infrastructure;
 using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Model;
 using Kogel.Dapper.Extension.MySql;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace Dapper.Repositories
 {
@@ -122,7 +122,7 @@ namespace Dapper.Repositories
         //}
         public void Dispose() => _mySqlConnection.Dispose();
 
-        async Task IUnitOfWork.BulkInsert<T>(IEnumerable<T> entitys)
+        async Task IUnitOfWork.BulkInsert<T>(ICollection<T> entitys)
         {
             var dataItems = entitys.ToList();
             var entityObject = EntityCache.Register(typeof(T));
