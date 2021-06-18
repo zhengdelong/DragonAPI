@@ -12,7 +12,7 @@ namespace Domain
         /// 用户id
         /// </summary>
         [Identity(IsIncrease = false)]
-        //[Display(Rename = "ID")]
+        [Display(Rename = "ID")]
         public string UserID { get; set; }
         /// <summary>
         /// 用户姓名

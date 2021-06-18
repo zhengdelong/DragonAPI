@@ -31,7 +31,7 @@ namespace Services
         {
             _ILogger.LogError("test");
             List<User> users = new List<User>(100000);
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10 ; i++)
             {
                 var flag = false;
                 if (i > 20)

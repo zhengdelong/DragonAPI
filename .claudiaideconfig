@@ -1,0 +1,22 @@
+﻿{
+  "BackgroundImageAbsolutePath": "D:\\backgroundImage\\296085921.jpeg",
+  "BackgroundImagesDirectoryAbsolutePath": "D:\\backgroundImage",
+  "ExpandToIDE": true,
+  "Extensions": ".png, .jpg, .gif, .bmp",
+  "ImageBackgroundType": 2,
+  "ImageFadeAnimationInterval": "PT0S",
+  "ImageStretch": 3,
+  "IsLimitToMainlyEditorWindow": false,
+  "LoopSlideshow": false,
+  "MaxHeight": 0,
+  "MaxWidth": 0,
+  "Opacity": 0.35,
+  "PositionHorizon": 1,
+  "PositionVertical": 1,
+  "ShuffleSlideshow": false,
+  "SoftEdgeX": 0,
+  "SoftEdgeY": 0,
+  "UpdateImageInterval": "PT1M",
+  "ViewBoxPointX": 0,
+  "ViewBoxPointY": 0
+}
