@@ -26,13 +26,28 @@ namespace DragonAPI.Controllers
         /// 
         /// </summary>
         /// <param name="user"></param>
-        [HttpPost("User")]
-        public async Task<int> AddUser(User user) => await _userServices.AddUser(user);
+        [HttpPost("addUser")]
+        public async Task<ActionResult> AddUser(User user)
+        {
+            if (user == null)
+            {
+                return new BadRequestObjectResult(user);
+            }
+            var res = await _userServices.AddUser(user);
+            if (res)
+            {
+                return new OkResult();
+            }
+            else
+            {
+                return new BadRequestObjectResult(user);
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet("UserPageResult")]
+        [HttpGet("userPageResult")]
         public PageList<User> UserPageResult(int pageSize, int pageIndex, string userName)
         {
             return _userServices.UserPageList(pageSize, pageIndex, userName);
@@ -42,8 +57,8 @@ namespace DragonAPI.Controllers
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        [HttpGet("User")]
-        public  User User(string userid)
+        [HttpGet("getUser")]
+        public User GetUser(string userid)
         {
             return _userServices.User(userid);
         }
@@ -53,14 +68,14 @@ namespace DragonAPI.Controllers
         /// <param name="userID"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPut("UpdateUser")]
+        [HttpPut("updateUser")]
         public bool UpdateUser(string userID, string name)
         {
             return _userServices.UpdateUser(userID, name);
         }
 
         [HttpPut("getstring")]
-        public string GetString() 
+        public string GetString()
         {
             return "";
         }

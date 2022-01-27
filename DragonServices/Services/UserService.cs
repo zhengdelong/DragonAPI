@@ -27,11 +27,11 @@ namespace Services
         {
             return _userRepositories.QueryEntity(s => s.UserID == userID);
         }
-        public async Task<int> AddUser(User user)
+        public async Task<int> AddUsers()
         {
             _ILogger.LogError("test");
-            List<User> users = new List<User>(100000);
-            for (int i = 0; i < 10 ; i++)
+            List<User> users = new(100000);
+            for (int i = 0; i < 10; i++)
             {
                 var flag = false;
                 if (i > 20)
@@ -44,7 +44,7 @@ namespace Services
                     ClassId = 12,
                     CreateTime = DateTime.Now,
                     Money = 23.32M,
-                    PassWord = MD5Encrypt.MD5Encrypt32(user.UserName + i),
+                    PassWord = MD5Encrypt.MD5Encrypt32("123456"),
                     Type = UserEnum.user,
                     UserName = $"test{i}",
                     IsUsed = flag
@@ -54,6 +54,13 @@ namespace Services
             await _unitOfWork.BulkInsert(users);
             _unitOfWork.Commit();
             return 1;
+        }
+
+        public async Task<bool> AddUser(User user)
+        {
+            user.UserID = SequentialGuidGenerator.Instance.Create().ToString();
+            _unitOfWork.Add(user);
+            return await _unitOfWork.CommitAsync();
         }
 
 

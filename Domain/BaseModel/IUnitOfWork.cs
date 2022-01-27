@@ -46,5 +46,10 @@ namespace Domain
         /// 
         /// </summary>
         bool Commit();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Task<bool> CommitAsync();
     }
 }

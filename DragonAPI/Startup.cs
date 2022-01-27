@@ -43,7 +43,7 @@ namespace DragonAPI
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<DragonDBContext>(opt => opt.UseMySql(Appsetting.DragonConnectionString));
-            services.AddControllers();
+            var mvcbuild = services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

@@ -11,8 +11,7 @@ namespace Services
     public interface IUserServices : IService
     {
         User User(string userID);
-
-        Task<int> AddUser(User user);
+        Task<bool> AddUser(User user);
 
         PageList<User> UserPageList(int pageSize, int pageIndex, string userName);
         bool UpdateUser(string userID, string name);

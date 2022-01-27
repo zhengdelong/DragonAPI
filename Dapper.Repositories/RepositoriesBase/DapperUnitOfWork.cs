@@ -48,6 +48,27 @@ namespace Dapper.Repositories
             }
         }
 
+        public async Task<bool> CommitAsync()
+        {
+            try
+            {
+                await _mySqlTransaction.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _mySqlTransaction.Rollback();
+                _mySqlConnection.Close();
+                return false;
+            }
+            finally
+            {
+                _mySqlConnection.Close();
+                _mySqlConnection.Dispose();
+                //_mySqlTransaction.Dispose();
+            }
+        }
+
         void IUnitOfWork.Add<T>(T entity)
         {
             _mySqlConnection.CommandSet<T>(_mySqlTransaction)
