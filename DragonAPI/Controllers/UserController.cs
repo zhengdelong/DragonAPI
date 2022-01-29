@@ -60,6 +60,10 @@ namespace DragonAPI.Controllers
         [HttpGet("getUser")]
         public User GetUser(string userid)
         {
+            if (string.IsNullOrEmpty(userid))
+            {
+                return null;
+            }
             return _userServices.User(userid);
         }
         /// <summary>
