@@ -66,11 +66,11 @@ namespace Services
 
         public PageList<User> UserPageList(int pageSize, int pageIndex, string userName)
         {
-            //Expression<Func<User, bool>> expression = s => true;
-            //if (!string.IsNullOrEmpty(userName))
-            //{
-            //    expression = expression.And(s => s.UserName == userName);
-            //}
+            Expression<Func<User, bool>> expression = s => true;
+            if (!string.IsNullOrEmpty(userName))
+            {
+                expression = expression.And(s => s.UserName == userName);
+            }
             var res = _userRepositories.QuerySet().Where(s => true);
             if (!string.IsNullOrEmpty(userName))
             {
